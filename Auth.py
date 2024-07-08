@@ -32,6 +32,7 @@ def company():
     low_price = int(input("Enter the lowest price of your stock : "))
     high_price = int(input("Enter the highest price of your stock : "))
     vol = int(input("Enter the volume of the stock traded :  "))
+    print()
 
 
 def daily_data(company_name, symbol):
@@ -45,7 +46,7 @@ def monthly_data(company, symbol):
 
 def main_menu():
     while True:
-        print("\nMain Menu")
+        print("Main Menu")
         print("USER")
         print("COMPANY")
         print("EXIT")
