@@ -1,6 +1,8 @@
 from flask import request, jsonify
 from data.conn import mydb, mycursor
 import re
+import os
+import jwt
 
 def user_register():
     data = request.get_json()
@@ -35,7 +37,16 @@ def user_login():
     mycursor.execute(query, (username, password))
     user = mycursor.fetchone()
 
-    if not user:
-        return jsonify({'status': 'fail', 'message': 'Invalid username or password' })
-
-    return jsonify({'status': 'success','message': 'Login successful','user': user})
+    if user:
+        payload = {'username': user[1]}
+        secret_key = os.getenv('SECRET_KEY')
+        
+        token = jwt.encode(payload, secret_key, algorithm='HS256')
+        
+        token_file = open('token.txt', 'w')
+        
+        token_file.write(token)
+        
+        return jsonify({'status': 'success','message': 'Login successful','token': token})
+           
+    return jsonify({'status': 'fail', 'message': 'Invalid username or password' })

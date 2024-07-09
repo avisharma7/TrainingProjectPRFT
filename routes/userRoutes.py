@@ -1,6 +1,7 @@
 from flask import Blueprint
 from controllers.user.userAuth import user_login, user_register
 from controllers.user.UserAnalysis import user_analysis
+from middleware.middleware import token_required
 
 user_routes = Blueprint('user_routes', __name__)
 
@@ -13,5 +14,6 @@ def register():
     return user_register()
 
 @user_routes.route('/api/user/analyse', methods=['GET'])
+@token_required
 def analysis():
     return user_analysis()
