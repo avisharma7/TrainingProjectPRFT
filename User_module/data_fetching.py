@@ -7,8 +7,11 @@ def delete_existing_file(filename):
         os.remove(filename)
 
 def fetch_and_save_data(symbol):
+    st = input("Enter the start date in (YYYY-MM-DD) format: ")
+    ed = input("Enter the end date in (YYYY-MM-DD) format: ")
+    int = input("Enter the interval (Day=1d) , (Week=1w), (Month=1mo): ")
     ticker = yf.Ticker(symbol.upper())
-    historical_data = ticker.history(start="2024-06-05", end="2024-07-05", interval="1d")
+    historical_data = ticker.history(start=st, end=ed, interval=int)
     csv_filename = f"{symbol}_historical.csv"
     
     # Delete the existing file if it exists
