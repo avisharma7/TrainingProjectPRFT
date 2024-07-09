@@ -1,7 +1,7 @@
 # analysis.py
 import pandas as pd
 import matplotlib.pyplot as plt
-from data_fetching import fetch_and_save_data
+from controllers.user.data_fetching import fetch_and_save_data
 
 def analyze_company(symbol, company_name):
     csv_filename = fetch_and_save_data(symbol)

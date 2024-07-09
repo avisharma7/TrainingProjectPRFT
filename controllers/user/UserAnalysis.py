@@ -1,9 +1,9 @@
-# main.py
-from db_operations import fetch_companies_from_db
-from analysis import analyze_company, compare_companies
+from data.conn import mydb, mycursor
+from controllers.user.analysis import analyze_company, compare_companies
 
-def main():
-    companies = fetch_companies_from_db()
+def user_analysis():
+    mycursor.execute('SELECT symbol, name FROM companies')
+    companies = {symbol: name for symbol, name in mycursor.fetchall()}
 
     while True:
         print("Menu:")
@@ -40,6 +40,3 @@ def main():
 
         else:
             print("Invalid choice. Please try again.")
-
-if __name__ == '__main__':
-    main()
