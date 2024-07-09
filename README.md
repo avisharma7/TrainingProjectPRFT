@@ -6,7 +6,7 @@ This project focuses on analyzing stock market data retrieved from an API and st
 
 ## Technologies Used
 
-- **Data Retrieval:** AlphaVantage API
+- **Data Retrieval:** yfinance API
 - **Data Storage:** MySQL
 - **Data Manipulation:** Pandas
 - **Backend Development:** Flask (for creating a RESTful API)
@@ -14,7 +14,7 @@ This project focuses on analyzing stock market data retrieved from an API and st
 
 ## Features
 
-- **Data Fetching:** Retrieve stock data using AlphaVantage API and convert it into CSV format.
+- **Data Fetching:** Retrieve stock data using yfinance API and convert it into CSV format.
   
 - **CRUD Operations:**
   - **Create:** Insert new stock data into the MySQL database.
