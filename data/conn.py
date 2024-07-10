@@ -11,4 +11,11 @@ mydb = mysql.connector.connect(
     port = 3306
 )
 
+db_config = {
+    'user': 'root',
+    'password': os.getenv('DB_PASS'),
+    'host': 'localhost',
+    'database': os.getenv('DB_NAME')
+}
+
 mycursor = mydb.cursor(buffered=True)

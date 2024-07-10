@@ -1,42 +1,44 @@
+from flask import request, jsonify
+
 from data.conn import mydb, mycursor
 from controllers.user.analysis import analyze_company, compare_companies
 
-def user_analysis():
+yfinance_symbols = ['ibm', 'prft', 'nsci', 'ba', 'meta', 'nvda', 'tsla', 'aapl', 'amzn', 'intc']
+
+def oneCompanyAnalysis():
     mycursor.execute('SELECT symbol, name FROM companies')
     companies = {symbol: name for symbol, name in mycursor.fetchall()}
+    
+    data = request.get_json()
+    
+    company_symbol = data.get('company_symbol')
+    
+    if company_symbol in yfinance_symbols:
+        analyze_company(company_symbol, companies.get(company_symbol, company_symbol.upper()), True)
+    elif company_symbol in companies:
+        analyze_company(company_symbol, companies[company_symbol], False)
+    else:
+        return jsonify({'error': 'Invalid company symbol. Please try again.'})  
+    
+    return jsonify({'message': "Processing..."}) 
 
-    while True:
-        print("Menu:")
-        print("1. Analyze one company")
-        print("2. Compare two companies")
-        print("3. Exit")
-        choice = input("Enter your choice: ")
+def twoCompaniesAnalysis():
+    mycursor.execute('SELECT symbol, name FROM companies')
+    companies = {symbol: name for symbol, name in mycursor.fetchall()}
+    
+    data = request.get_json()
+    
+    
+    symbol1 = data.get('company1')
+    symbol2 = data.get('company2')
+    
+    if (symbol1 in yfinance_symbols or symbol1 in companies) and (symbol2 in yfinance_symbols or symbol2 in companies):
+        compare_companies(symbol1, symbol2, companies)
+    else:
+        if symbol1 not in yfinance_symbols:
+            return jsonify({'message' : f"{symbol1} does not exist in the companies data."})
+        if symbol2 not in companies:
+             return jsonify({'message' : f"{symbol2} does not exist in the companies data."})
 
-        if choice == '1':
-            print("Please choose a company from the list below:")
-            for symbol, name in companies.items():
-                print(f"{symbol}: {name}")
-            company_symbol = input("Enter the symbol of the company you want to analyze: ").lower()
-
-            if company_symbol in companies:
-                analyze_company(company_symbol, companies[company_symbol])
-            else:
-                print("Invalid company symbol. Please try again.")
-
-        elif choice == '2':
-            print("Please choose two companies from the list below:")
-            for symbol, name in companies.items():
-                print(f"{symbol}: {name}")
-            symbol1 = input("Enter the symbol of the first company: ").lower()
-            symbol2 = input("Enter the symbol of the second company: ").lower()
-
-            if symbol1 in companies and symbol2 in companies:
-                compare_companies(symbol1, symbol2, companies)
-            else:
-                print("Invalid company symbol(s). Please try again.")
-
-        elif choice == '3':
-            break
-
-        else:
-            print("Invalid choice. Please try again.")
+        
+    return jsonify({'message': "Processing..."}) 
