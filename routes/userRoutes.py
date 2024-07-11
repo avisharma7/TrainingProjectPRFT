@@ -1,5 +1,5 @@
 from flask import Blueprint
-from controllers.auth.authentication import register, login
+from auth.authentication import register, login
 from controllers.user.UserAnalysis import oneCompanyAnalysis, twoCompaniesAnalysis
 from controllers.user.PriceAnalysis import plot_prices
 from middleware.middleware import token_required

@@ -15,8 +15,8 @@ def token_required(f):
             if not token:
                 return jsonify({'status': 'fail', 'message': 'Token is missing!'}), 401
 
-            secret_key = os.getenv('SECRET_KEY')
-            payload = jwt.decode(token, secret_key, algorithms=['HS256'])
+            # secret_key = os.getenv('SECRET_KEY')
+            # payload = jwt.decode(token, secret_key, algorithms=['HS256'])
 
             # Check if the token exists in the user_tokens table
             user_token_query = "SELECT * FROM users WHERE token = %s"

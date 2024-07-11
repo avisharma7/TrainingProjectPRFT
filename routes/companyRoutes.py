@@ -1,5 +1,5 @@
 from flask import Blueprint
-from controllers.auth.authentication import register, login
+from auth.authentication import register, login
 from controllers.company.CompanyAnalysis import create_data, update_data, delete_data, get_data
 from middleware.middleware import token_required
 
