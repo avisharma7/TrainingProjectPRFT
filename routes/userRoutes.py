@@ -1,18 +1,20 @@
 from flask import Blueprint
-from controllers.user.userAuth import user_login, user_register
+from controllers.auth.authentication import register, login
 from controllers.user.UserAnalysis import oneCompanyAnalysis, twoCompaniesAnalysis
 from controllers.user.PriceAnalysis import plot_prices
 from middleware.middleware import token_required
 
 user_routes = Blueprint('user_routes', __name__)
 
+table = 'users'
+
 @user_routes.route('/api/user/login', methods=['POST'])
-def login():
-    return user_login()
+def UserLogin():
+    return login(table)
 
 @user_routes.route('/api/user/register', methods=['POST'])
-def register():
-    return user_register()
+def UserRegister():
+    return register(table)
 
 @user_routes.route('/api/user/one-company-analysis', methods=['GET'])
 @token_required

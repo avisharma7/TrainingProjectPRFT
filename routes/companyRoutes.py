@@ -1,17 +1,19 @@
 from flask import Blueprint
-from controllers.company.companyAuth import company_login, company_register
+from controllers.auth.authentication import register, login
 from controllers.company.CompanyAnalysis import create_data, update_data, delete_data, get_data
 from middleware.middleware import token_required
 
 company_routes = Blueprint('company_routes', __name__)
 
+table = 'company'
+
 @company_routes.route('/api/company/login', methods=['POST'])
-def login():
-    return company_login()
+def CompanyLogin():
+    return login(table)
 
 @company_routes.route('/api/company/register', methods=['POST'])
-def register():
-    return company_register()
+def ComapnyRegister():
+    return register(table)
 
 @company_routes.route('/api/company/create', methods=['POST'])
 @token_required
